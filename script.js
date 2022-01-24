@@ -89,16 +89,21 @@ $(".summary").click(function () {
 
 // 調整分數動作
 $(".adjust").click(function () {
+  let students = getStudents();
+  students = adjustScore(students);
+
   if ($(`table tr`).find(`th:eq(3)`).length == 0) {
-    let students = getStudents();
-    students = adjustScore(students);
     $(`#student-form tr:first-of-type`).append(`<th>調整後分數</th>`);
     students.forEach((element, index) => {
-      const data = `<td><input type="text" value="${element.score}"></td>`;
+      const data = `<td>${element.score}</td>`;
       $(`#student-form tr:nth-of-type(${index + 2})`).append(data);
     });
   } else {
-    $(`table tr`).find(`th:eq(3),td:eq(3)`).remove();
+    students.forEach((element, index) => {
+      $(`#student-form tr:nth-of-type(${index + 2}) td:nth-of-type(4)`).text(
+        `${element.score}`
+      );
+    });
   }
 });
 
