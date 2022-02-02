@@ -1,9 +1,21 @@
+// 隨機產生測試資料
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max + 1);
+}
+
+$(document).ready(function () {
+  $("table td:nth-of-type(3n) input").each(function (index, element) {
+    element.value = getRandomInt(60);
+  });
+});
+
 // class Student {
 //   constructor(no, score) {
 //     this.no = no;
 //     this.score = score;
 //   }
 // }
+
 function Student(no, score) {
   this.no = no;
   this.score = score;
@@ -12,13 +24,13 @@ function Student(no, score) {
 //取得學生資料
 function getStudents() {
   let studentArr = [];
-  $("#student-form td:nth-of-type(2) input").each(function (index, element) {
+  $("table td:nth-of-type(2) input").each(function (index, element) {
     let student = new Student();
     student.no = element.value;
     studentArr.push(student);
   });
 
-  $("#student-form td:nth-of-type(3) input").each(function (index, element) {
+  $("table td:nth-of-type(3) input").each(function (index, element) {
     studentArr[index].score = Number(element.value);
   });
   return studentArr;
@@ -79,7 +91,8 @@ function adjustScore(array) {
 }
 
 // 統計分數動作
-$(".summary").click(function () {
+$(".summary").click(function (e) {
+  e.preventDefault();
   const students = getStudents();
   $("p").empty();
   $("p").append(`平均分數:${getAverageScore(students)}<br>`);
@@ -88,32 +101,22 @@ $(".summary").click(function () {
 });
 
 // 調整分數動作
-$(".adjust").click(function () {
+$(".adjust").click(function (e) {
+  e.preventDefault();
   let students = getStudents();
   students = adjustScore(students);
 
   if ($(`table tr`).find(`th:eq(3)`).length == 0) {
-    $(`#student-form tr:first-of-type`).append(`<th>調整後分數</th>`);
+    $(`table tr:first-of-type`).append(`<th>調整後分數</th>`);
     students.forEach((element, index) => {
       const data = `<td>${element.score}</td>`;
-      $(`#student-form tr:nth-of-type(${index + 2})`).append(data);
+      $(`table tr:nth-of-type(${index + 2})`).append(data);
     });
   } else {
     students.forEach((element, index) => {
-      $(`#student-form tr:nth-of-type(${index + 2}) td:nth-of-type(4)`).text(
+      $(`table tr:nth-of-type(${index + 2}) td:nth-of-type(4)`).text(
         `${element.score}`
       );
     });
   }
-});
-
-// 隨機產生測試資料
-function getRandomInt(max) {
-  return Math.floor(Math.random() * max + 1);
-}
-
-$(document).ready(function () {
-  $("#student-form td:nth-of-type(3n) input").each(function (index, element) {
-    element.value = getRandomInt(60);
-  });
 });
