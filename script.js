@@ -4,18 +4,15 @@ function getRandomInt(max) {
 }
 
 $(document).ready(function () {
+  $("table td:nth-of-type(2n) input").each(function (index, element) {
+    element.value = `111${getRandomInt(99)}`;
+  });
   $("table td:nth-of-type(3n) input").each(function (index, element) {
     element.value = getRandomInt(60);
   });
 });
 
-// class Student {
-//   constructor(no, score) {
-//     this.no = no;
-//     this.score = score;
-//   }
-// }
-
+//Student class
 function Student(no, score) {
   this.no = no;
   this.score = score;
