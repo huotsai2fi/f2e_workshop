@@ -103,8 +103,8 @@ $(".adjust").click(function (e) {
   let students = getStudents();
   students = adjustScore(students);
 
-  if ($(`table tr`).find(`th:eq(3)`).length == 0) {
-    $(`table tr:first-of-type`).append(`<th>調整後分數</th>`);
+  if ($("table").find("th:eq(3)").length == 0) {
+    $("table tr:first-of-type").append("<th>調整後分數</th>");
     students.forEach((element, index) => {
       const data = `<td>${element.score}</td>`;
       $(`table tr:nth-of-type(${index + 2})`).append(data);
